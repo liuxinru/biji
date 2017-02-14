@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="js/animate.js"></script>
+	<script src="js/function.js"></script>
+	<style>
+		.box{
+			background: red;
+			width: 200px;
+			height: 200px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+	<body>
+		<div class="box"></div>
+	</body>
+	<script>
+		var box=$(".box")[0];
+		class drag{
+			constructor(){
+			    this.box=box;//这个属性box的值为box
+		        this.cw=document.documentElement.clientWidth;
+		        this.ch=document.documentElement.clientHeight;
+		        this.ow=this.box.offsetWidth;
+		        this.oh=this.box.offsetHeight;
+		        this.ox=0;//因为是移动之后才有距离的变化，所以先把他们设为0
+		        this.oy=0;
+		        this.cx=0;
+		        this.cy=0;
+		        this.left=0;
+		        this.top=0;
+			}
+			dra(){
+				this.down();
+			}
+			down(){
+				var that=this;//将this给了that
+	            this.box.onmousedown=function(e){
+	               var er=e||window.event;
+	               that.ox=er.offsetX; 
+	               that.oy=er.offsetY; 
+		           that.move();//在鼠标摁下之后，开始移动，移动完后，再抬起
+		           that.up();
+	            }
+			}
+			move(){
+				var that=this;
+	            document.onmousemove=function(e){
+	                var ere=e||window.event;
+	                that.cx=ere.clientX; 
+	                that.cy=ere.clientY; 
+	                that.left=that.cx-that.ox;
+	                that.top=that.cy-that.oy;
+	                if(that.left<=0){
+	               	    that.left=0
+	                };
+				    if(that.top>=(that.ch-that.oh)){
+				        that.top=that.ch-that.oh
+				    };
+				    if(that.top<=0){
+				   	  that.top=0
+				    };
+				    if(that.left>=(that.cw-that.ow)){
+				      that.left=that.cw-that.ow
+				    };
+	                that.box.style.left=that.left+"px";
+	                that.box.style.top=that.top+"px";
+	            }
+			}
+			up(){
+				document.onmouseup=function(){
+	                document.onmousemove=null;
+	                document.onmouseup=null;
+	            }
+			}
+		}
+		var mo=new drag();
+		mo.dra();
+	</script>
+</html>
