@@ -1,0 +1,63 @@
+@color:green;
+@float:left;
+div{
+  width: 200px;
+  height:200px;
+  background: @color;
+  float:@float;
+  .radius(80%,20px,80%,10px);
+  .shadow(outset);
+}
+.radius(@num1,@num2,@num3,@num4){
+     -webkit-border-radius: @arguments;
+     -moz-border-radius: @arguments;
+     -ms-border-radius: @arguments;
+     -o-border-radius: @arguments;
+     border-radius: @arguments;
+}
+.shadow(@type,@x:0,@y:0,@b:25px,@c:#000) when (@type=inset){
+  -webkit-box-shadow:@x @y @b @c @type;
+  -moz-box-shadow:@x @y @b @c @type;
+  -ms-box-shadow:@x @y @b @c @type;
+  -o-box-shadow: @x @y @b @c @type;
+  box-shadow: @x @y @b @c @type;
+}
+.shadow(@type,@x:0,@y:0,@b:25px,@c:#000) when (@type=outset){
+  -webkit-box-shadow: @x @y @b @c;
+  -moz-box-shadow: @x @y @b @c;
+  -ms-box-shadow: @x @y @b @c;
+  -o-box-shadow: @x @y @b @c;
+  box-shadow: @x @y @b @c;
+}
+
+.box{
+    width: 200px;
+    height:200px;
+    margin:0 auto;
+    border:1px solid @color;
+    border-image-source: url("../pexels-photo-64112.jpeg");
+    border-image-width: 15px;
+    border-image-slice: 33.333% 33.333% 33.3333% 33.333%;
+    border-image-repeat: round;
+    border-image-outset:10px ;
+}
+
+
+.for(@i:1) when (@i<10){
+  .box1{
+    width: @i/10*100%;
+    height:100px;
+    background: brown;
+ }
+  .for(@i:@i+1);
+}
+.for();
+
+div{
+   &span{
+    width:40px;
+  }
+   &a{
+     font-size:20px;
+   }
+}
